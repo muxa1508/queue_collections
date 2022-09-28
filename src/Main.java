@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -26,13 +25,11 @@ public class Main {
 
         Deque<Person> queue = new ArrayDeque(generateClients());
 
-        while (queue.isEmpty() == false) {
-            Person person = queue.peekFirst();
+        while (!queue.isEmpty()) {
+            Person person = queue.pollFirst();
             int ticketNumber = person.getTickets();
-            if (ticketNumber == 0) {
-                queue.removeFirst();
-            } else if (ticketNumber > 0) {
-                queue.offerLast(queue.pollFirst());
+            if (ticketNumber > 0) {
+                queue.offerLast(person);
                 person.setTickets(ticketNumber - 1);
                 System.out.println(person.getName() + " " + person.getSurname() + " прокатился на аттракционе. Осталось билетов: " + person.getTickets());
                 if (person.getTickets() == 0) {
